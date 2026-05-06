@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlwaysAI — Blog</title>
+    <meta name="description" content="Insights, guides, and practical tips on AI for German Mittelstand businesses.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== DESIGN TOKENS ===== */
+        :root {
+            --primary-900: #060B14;
+            --primary-800: #0A1122;
+            --primary-700: #0F1D36;
+            --primary-600: #1A2F52;
+
+            --accent-500: #00B4D8;
+            --accent-400: #48CAE4;
+            --accent-600: #0096B7;
+
+            --white: #FFFFFF;
+            --gray-50: #F4F6F9;
+            --gray-100: #E2E6EC;
+            --gray-200: #C8CED8;
+            --gray-400: #8B95A5;
+            --gray-600: #4B5563;
+            --gray-900: #0F172A;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-card-hover: 0 8px 25px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* ===== RESET ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            color: var(--gray-900);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+        img, svg { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+        ul { list-style: none; }
+
+        /* ===== UTILITY ===== */
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== NAV ===== */
+        nav {
+            background: var(--primary-900);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        .nav-logo span { color: var(--accent-400); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-cta {
+            background: var(--accent-500);
+            color: var(--primary-900) !important;
+            padding: 8px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600 !important;
+            transition: all 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent-400); }
+
+        /* ===== LANG TOGGLE ===== */
+        .lang-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .lang-toggle button {
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-400);
+            background: transparent;
+            transition: all 0.2s;
+        }
+        .lang-toggle button.active {
+            background: var(--accent-500);
+            color: var(--primary-900);
+        }
+        .lang-toggle button:hover:not(.active) { color: var(--white); }
+
+        /* ===== HERO ===== */
+        .blog-hero {
+            background: linear-gradient(160deg, var(--primary-900) 0%, var(--primary-700) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 140%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0,180,216,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .blog-hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+        .blog-hero p {
+            font-size: 17px;
+            color: var(--gray-400);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ===== CATEGORY FILTER ===== */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 32px 0;
+        }
+        .cat-btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            transition: all 0.2s;
+            border: 1.5px solid transparent;
+        }
+        .cat-btn:hover { border-color: var(--accent-500); color: var(--accent-500); }
+        .cat-btn.active {
+            background: var(--accent-500);
+            color: var(--primary-900);
+            border-color: var(--accent-500);
+        }
+
+        /* ===== FEATURED ===== */
+        .featured-section { padding: 0 0 48px; }
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-500);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-label::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--accent-500);
+        }
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 32px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--gray-100);
+        }
+        .featured-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--gray-200); }
+        .featured-img {
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-600));
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .featured-img svg { width: 80px; height: 80px; opacity: 0.4; }
+        .featured-body { padding: 40px 32px 40px 0; display: flex; flex-direction: column; justify-content: center; }
+        .featured-body .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-500);
+            margin-bottom: 12px;
+        }
+        .featured-body h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .featured-body .excerpt {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .featured-body .meta {
+            font-size: 13px;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* ===== BLOG GRID ===== */
+        .blog-grid-section { padding: 0 0 64px; }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .blog-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--gray-100);
+            transition: all 0.3s;
+        }
+        .blog-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--gray-200); transform: translateY(-2px); }
+        .card-img {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-img svg { width: 48px; height: 48px; opacity: 0.5; }
+        .card-img.blue { background: linear-gradient(135deg, #e8f4fd, #d0ebfa); }
+        .card-img.green { background: linear-gradient(135deg, #e8faf1, #d0f5e3); }
+        .card-img.orange { background: linear-gradient(135deg, #fef3e8, #fde8d0); }
+        .card-img.purple { background: linear-gradient(135deg, #f0e8fe, #e3d0fc); }
+        .card-img.pink { background: linear-gradient(135deg, #fde8f4, #fcd0ea); }
+        .card-img.teal { background: linear-gradient(135deg, #e8fafd, #d0f5fc); }
+        .card-body { padding: 20px; }
+        .card-body .tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-500);
+            margin-bottom: 8px;
+        }
+        .card-body h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .card-body .excerpt {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .card-body .meta {
+            font-size: 12px;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card-body .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-500);
+            transition: gap 0.2s;
+        }
+        .blog-card:hover .read-more { gap: 8px; }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter-section {
+            background: var(--primary-900);
+            padding: 64px 0;
+            text-align: center;
+        }
+        .newsletter-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .newsletter-section > .container > p {
+            color: var(--gray-400);
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.06);
+            color: var(--white);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .newsletter-form input::placeholder { color: var(--gray-400); }
+        .newsletter-form input:focus { border-color: var(--accent-500); }
+        .newsletter-form button {
+            padding: 14px 28px;
+            background: var(--accent-500);
+            color: var(--primary-900);
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .newsletter-form button:hover { background: var(--accent-400); }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            padding: 32px 0 64px;
+        }
+        .pagination button {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            background: var(--gray-50);
+            color: var(--gray-600);
+            border: 1px solid var(--gray-100);
+            transition: all 0.2s;
+        }
+        .pagination button.active { background: var(--accent-500); color: var(--primary-900); border-color: var(--accent-500); }
+        .pagination button:hover:not(.active) { border-color: var(--accent-500); color: var(--accent-500); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary-800);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 48px 0 24px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 40px;
+        }
+        .footer-brand .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .footer-brand .logo span { color: var(--accent-400); }
+        .footer-brand p { color: var(--gray-400); font-size: 14px; line-height: 1.7; }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-400);
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            color: var(--gray-400);
+            font-size: 14px;
+            padding: 4px 0;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--white); }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 24px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+        .footer-social { display: flex; gap: 16px; }
+        .footer-social a { color: var(--gray-400); transition: color 0.2s; }
+        .footer-social a:hover { color: var(--white); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .featured-card { grid-template-columns: 1fr; }
+            .featured-body { padding: 28px 24px; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .nav-links { gap: 16px; }
+            .nav-links a:not(.nav-cta) { display: none; }
+            .newsletter-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+    <div class="nav-inner">
+        <a href="alwaysai-prototype-v5.html" class="nav-logo">Always<span>AI</span></a>
+        <div class="nav-links">
+            <a href="alwaysai-prototype-v5.html" data-de="Start" data-en="Home">Home</a>
+            <a href="#" class="active" data-de="Blog" data-en="Blog">Blog</a>
+            <a href="alwaysai-prototype-v5.html#kontakt" class="nav-cta" data-de="Erstgespräch →" data-en="Get Started →">Get Started →</a>
+            <div class="lang-toggle" id="langToggle">
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="de">DE</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== BLOG HERO ===== -->
+<section class="blog-hero">
+    <div class="container">
+        <h1 data-de="KI-Wissen für den Mittelstand" data-en="AI Knowledge for Mittelstand">AI Knowledge for Mittelstand</h1>
+        <p data-de="Praktische Tipps, Insights und Anleitungen — verständlich erklärt." data-en="Practical tips, insights, and guides — explained simply.">Practical tips, insights, and guides — explained simply.</p>
+    </div>
+</section>
+
+<!-- ===== FEATURED ARTICLE ===== -->
+<div class="container">
+    <section class="featured-section">
+        <div class="section-label" data-de="Empfohlen" data-en="Featured">Featured</div>
+        <a href="#" class="featured-card">
+            <div class="featured-img">
+                <svg viewBox="0 0 24 24" fill="none" stroke="rgba(0,180,216,0.5)" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg>
+            </div>
+            <div class="featured-body">
+                <span class="tag" data-de="KI-Strategie" data-en="AI Strategy">AI Strategy</span>
+                <h2 data-de="Wie der Mittelstand KI ohne Risiko testen kann" data-en="How the Mittelstand Can Test AI Without Risk">How the Mittelstand Can Test AI Without Risk</h2>
+                <p class="excerpt" data-de="Viele Unternehmen warten ab — doch der erste Schritt ist einfacher als gedacht. Wir zeigen, wie Sie mit kleinem Budget und ohne technisches Team KI-Projekte starten können." data-en="Many companies are waiting — but the first step is simpler than you think. We show how to start AI projects with a small budget and no technical team.">Many companies are waiting — but the first step is simpler than you think. We show how to start AI projects with a small budget and no technical team.</p>
+                <div class="meta">
+                    <span data-de="5 Min. Lesezeit" data-en="5 min read">5 min read</span>
+                    <span>·</span>
+                    <span>06.05.2026</span>
+                </div>
+            </div>
+        </a>
+    </section>
+</div>
+
+<!-- ===== CATEGORY FILTER ===== -->
+<div class="container">
+    <div class="category-filter">
+        <button class="cat-btn active" data-de="Alle" data-en="All">All</button>
+        <button class="cat-btn" data-de="KI-Strategie" data-en="AI Strategy">AI Strategy</button>
+        <button class="cat-btn" data-de="Praxis" data-en="In Practice">In Practice</button>
+        <button class="cat-btn" data-de="Tools" data-en="Tools">Tools</button>
+        <button class="cat-btn" data-de="Sicherheit" data-en="Security">Security</button>
+    </div>
+</div>
+
+<!-- ===== BLOG GRID ===== -->
+<div class="container">
+    <section class="blog-grid-section">
+        <div class="blog-grid">
+            <!-- Card 1 -->
+            <a href="#" class="blog-card">
+                <div class="card-img blue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="Tools" data-en="Tools">Tools</span>
+                    <h3 data-de="Die 5 besten KI-Tools für kleine Unternehmen 2026" data-en="Top 5 AI Tools for Small Businesses in 2026">Top 5 AI Tools for Small Businesses in 2026</h3>
+                    <p class="excerpt" data-de="ChatGPT, Claude, Gemini — welches Tool passt zu welchem Anwendungsfall? Ein praktischer Vergleich." data-en="ChatGPT, Claude, Gemini — which tool fits which use case? A practical comparison.">ChatGPT, Claude, Gemini — which tool fits which use case? A practical comparison.</p>
+                    <div class="meta">
+                        <span data-de="7 Min." data-en="7 min">7 min</span>
+                        <span>·</span>
+                        <span>03.05.2026</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 2 -->
+            <a href="#" class="blog-card">
+                <div class="card-img green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="Sicherheit" data-en="Security">Security</span>
+                    <h3 data-de="KI und DSGVO: Was Sie wissen müssen" data-en="AI and GDPR: What You Need to Know">AI and GDPR: What You Need to Know</h3>
+                    <p class="excerpt" data-de="Datenschutz und KI — kein Widerspruch. So nutzen Sie KI-Tools DSGVO-konform im Unternehmen." data-en="Data protection and AI — no contradiction. How to use AI tools in compliance with GDPR.">Data protection and AI — no contradiction. How to use AI tools in compliance with GDPR.</p>
+                    <div class="meta">
+                        <span data-de="8 Min." data-en="8 min">8 min</span>
+                        <span>·</span>
+                        <span>29.04.2026</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 3 -->
+            <a href="#" class="blog-card">
+                <div class="card-img orange">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="Praxis" data-en="In Practice">In Practice</span>
+                    <h3 data-de="Wie ein mittelständischer Betrieb 20 Stunden/Woche spart" data-en="How a Midsize Business Saves 20 Hours/Week">How a Midsize Business Saves 20 Hours/Week</h3>
+                    <p class="excerpt" data-de="Case Study: Ein Familienunternehmen automatisiert seine Rechnungsprüfung und Kundenservice mit KI." data-en="Case study: A family business automates invoice checking and customer service with AI.">Case study: A family business automates invoice checking and customer service with AI.</p>
+                    <div class="meta">
+                        <span data-de="6 Min." data-en="6 min">6 min</span>
+                        <span>·</span>
+                        <span>25.04.2026</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 4 -->
+            <a href="#" class="blog-card">
+                <div class="card-img purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="KI-Strategie" data-en="AI Strategy">AI Strategy</span>
+                    <h3 data-de="Prompt Engineering für Nicht-Techniker" data-en="Prompt Engineering for Non-Technical People">Prompt Engineering for Non-Technical People</h3>
+                    <p class="excerpt" data-de="Sie brauchen keinen Code, um KI effektiv zu nutzen. Die 7 wichtigsten Prompt-Techniken." data-en="You don't need code to use AI effectively. The 7 most important prompt techniques.">You don't need code to use AI effectively. The 7 most important prompt techniques.</p>
+                    <div class="meta">
+                        <span data-de="10 Min." data-en="10 min">10 min</span>
+                        <span>·</span>
+                        <span>21.04.2026</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 5 -->
+            <a href="#" class="blog-card">
+                <div class="card-img pink">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM12 3h4v18h-4z"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="Tools" data-en="Tools">Tools</span>
+                    <h3 data-de="KI für Social Media: Content-Planung automatisieren" data-en="AI for Social Media: Automate Content Planning">AI for Social Media: Automate Content Planning</h3>
+                    <p class="excerpt" data-de="Von der Ideenfindung bis zur Veröffentlichung — wie KI Ihren Social-Media-Workflow transformiert." data-en="From idea to publication — how AI transforms your social media workflow.">From idea to publication — how AI transforms your social media workflow.</p>
+                    <div class="meta">
+                        <span data-de="5 Min." data-en="5 min">5 min</span>
+                        <span>·</span>
+                        <span>17.04.2026</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 6 -->
+            <a href="#" class="blog-card">
+                <div class="card-img teal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <div class="card-body">
+                    <span class="tag" data-de="Praxis" data-en="In Practice">In Practice</span>
+                    <h3 data-de="KI in der Produktion: Predictive Maintenance erklärt" data-en="AI in Manufacturing: Predictive Maintenance Explained">AI in Manufacturing: Predictive Maintenance Explained</h3>
+                    <p class="excerpt" data-de="Maschinenausfälle vorhersagen statt reparieren — wie KI Stillstandzeiten minimiert." data-en="Predict machine failures instead of repairing them — how AI minimizes downtime.">Predict machine failures instead of repairing them — how AI minimizes downtime.</p>
+                    <div class="meta">
+                        <span data-de="9 Min." data-en="9 min">9 min</span>
+                        <span>·</span>
+                        <span>13.04.2026</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+
+<!-- ===== PAGINATION ===== -->
+<div class="container">
+    <div class="pagination">
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>→</button>
+    </div>
+</div>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="newsletter-section">
+    <div class="container">
+        <h2 data-de="KI-Insights direkt ins Postfach" data-en="AI Insights Straight to Your Inbox">AI Insights Straight to Your Inbox</h2>
+        <p data-de="Monatliche Tipps, neue Tools und Praxis-Beispiele — kein Spam, versprochen." data-en="Monthly tips, new tools, and real-world examples — no spam, promised.">Monthly tips, new tools, and real-world examples — no spam, promised.</p>
+        <form class="newsletter-form" onsubmit="return false;">
+            <input type="email" data-de="Ihre E-Mail-Adresse" data-en="Your email address" placeholder="Your email address" required>
+            <button type="submit" data-de="Anmelden" data-en="Subscribe">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Always<span>AI</span></div>
+                <p>
+                    <span data-de="Immer AI. Immer für Sie da.<br>Pragmatische KI-Beratung für den deutschen Mittelstand." data-en="Always AI. Always there for you.<br>Pragmatic AI consulting for German Mittelstand.">Always AI. Always there for you.<br>Pragmatic AI consulting for German Mittelstand.</span>
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4 data-de="Kontakt" data-en="Contact">Contact</h4>
+                <a href="mailto:kontakt@alwaysai.eu">kontakt@alwaysai.eu</a>
+                <a href="https://alwaysai.eu">alwaysai.eu</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-de="Rechtliches" data-en="Legal">Legal</h4>
+                <a href="#" data-de="Impressum" data-en="Imprint">Imprint</a>
+                <a href="#" data-de="Datenschutz" data-en="Privacy">Privacy</a>
+                <a href="#">AGB</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 AlwaysAI. <span data-de="Alle Rechte vorbehalten." data-en="All rights reserved.">All rights reserved.</span></span>
+            <div class="footer-social">
+                <a href="#" aria-label="LinkedIn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="#" aria-label="X / Twitter">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== LANGUAGE TOGGLE JS ===== -->
+<script>
+(function() {
+    const toggle = document.getElementById('langToggle');
+    const buttons = toggle.querySelectorAll('button');
+    let currentLang = localStorage.getItem('alwaysai-lang') || 'en';
+
+    function applyLang(lang) {
+        currentLang = lang;
+        localStorage.setItem('alwaysai-lang', lang);
+        document.documentElement.lang = lang;
+
+        buttons.forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        document.querySelectorAll('[data-' + lang + ']').forEach(function(el) {
+            var text = el.getAttribute('data-' + lang);
+            if (text) {
+                if (el.tagName === 'LI') {
+                    el.textContent = text;
+                } else if (el.tagName === 'IMG' || el.tagName === 'SVG') {
+                    // skip media elements
+                } else {
+                    if (text.includes('<')) {
+                        el.innerHTML = text;
+                    } else {
+                        el.textContent = text;
+                    }
+                }
+            }
+        });
+
+        // Update placeholder text for inputs
+        document.querySelectorAll('input[data-' + lang + ']').forEach(function(input) {
+            input.placeholder = input.getAttribute('data-' + lang);
+        });
+    }
+
+    buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            applyLang(btn.dataset.lang);
+        });
+    });
+
+    applyLang(currentLang);
+})();
+</script>
+
+</body>
+</html>
