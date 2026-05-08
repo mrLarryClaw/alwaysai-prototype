@@ -1,19 +1,10 @@
 <svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;500&amp;display=swap');
-      .lbl { font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; }
-    </style>
+    <style>.lbl { font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; }</style>
   </defs>
-  <rect width="600" height="200" rx="0" fill="#F5F4F0"/>
-  <!-- Signal dot -->
-  <circle cx="60" cy="90" r="28" fill="none" stroke="#0D0D0D" stroke-width="1" opacity="0.12"/>
-  <circle cx="60" cy="90" r="18" fill="none" stroke="#0D0D0D" stroke-width="1" opacity="0.2"/>
-  <circle cx="60" cy="90" r="8" fill="#0D0D0D"/>
-  <!-- Wordmark -->
-  <text x="95" y="105" class="lbl" font-size="48" font-weight="300" fill="#0D0D0D" letter-spacing="-1">always<tspan font-weight="500">ai</tspan></text>
-  <!-- Tagline -->
-  <text x="60" y="148" class="lbl" font-size="13" font-weight="300" fill="#0D0D0D" opacity="0.35" letter-spacing="3.5">AI-NATIVE SERVICES</text>
-  <!-- Divider -->
-  <line x1="60" y1="160" x2="540" y2="160" stroke="#0D0D0D" stroke-width="0.5" opacity="0.1"/>
+  <rect width="600" height="200" fill="#F5F4F0"/>
+  <circle cx="70" cy="100" r="44" fill="none" stroke="#0D0D0D" stroke-width="1.5" opacity="0.15"/>
+  <circle cx="70" cy="100" r="30" fill="none" stroke="#0D0D0D" stroke-width="2" opacity="0.35"/>
+  <circle cx="70" cy="100" r="14" fill="#0D0D0D"/>
+  <text x="124" y="116" class="lbl" font-size="52" font-weight="300" fill="#0D0D0D" letter-spacing="-1">always<tspan font-weight="500">ai</tspan></text>
 </svg>
