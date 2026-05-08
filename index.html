@@ -7,7 +7,13 @@
     <meta name="description" content="Always AI. We track new AI models and tools every day — so you don't have to. Pragmatic AI consulting for German Mittelstand.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/alwaysai-favicon.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48x48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180x180.png">
     <style>
         /* ===== DESIGN TOKENS ===== */
         :root {
@@ -100,11 +106,8 @@
             display: flex; align-items: center; justify-content: space-between;
             height: 64px;
         }
-        .logo {
-            font-size: 20px; font-weight: 800; color: var(--white);
-            letter-spacing: -0.5px;
-        }
-        .logo span { color: var(--accent-400); }
+        .logo { display: flex; align-items: center; }
+        .logo-svg { height: 36px; width: auto; color: var(--white); }
         .topbar-links { display: flex; align-items: center; gap: 8px; }
         .lang-toggle {
             display: flex; align-items: center; gap: 6px;
@@ -502,7 +505,14 @@
 <!-- ===== TOP BAR ===== -->
 <nav class="topbar" role="navigation" aria-label="Main navigation">
     <div class="container topbar-inner">
-        <a href="#" class="logo">Always<span>AI</span></a>
+        <a href="#" class="logo" aria-label="AlwaysAI Home">
+            <svg class="logo-svg" width="160" height="52" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <circle cx="60" cy="90" r="28" stroke="currentColor" stroke-width="1" opacity="0.12"/>
+                <circle cx="60" cy="90" r="18" stroke="currentColor" stroke-width="1" opacity="0.22"/>
+                <circle cx="60" cy="90" r="8" fill="currentColor"/>
+                <text x="95" y="105" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="48" font-weight="300" fill="currentColor" letter-spacing="-1">always<tspan font-weight="500">ai</tspan></text>
+            </svg>
+        </a>
         <div class="topbar-links">
             <a href="#schwerpunkte" class="nav-link" style="color: var(--gray-200); font-size: 14px; font-weight: 500; padding: 6px 12px;"
                data-de="Schwerpunkte" data-en="Focus Areas">Schwerpunkte</a>
@@ -774,7 +784,12 @@
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="logo">Always<span>AI</span></div>
+                <svg class="footer-logo-svg" width="140" height="48" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <circle cx="60" cy="90" r="28" stroke="white" stroke-width="1" opacity="0.12"/>
+                    <circle cx="60" cy="90" r="18" stroke="white" stroke-width="1" opacity="0.22"/>
+                    <circle cx="60" cy="90" r="8" fill="white"/>
+                    <text x="95" y="105" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="48" font-weight="300" fill="white" letter-spacing="-1">always<tspan font-weight="500">ai</tspan></text>
+                </svg>
                 <p>
                     <span data-de="Immer AI. Immer für Sie da.<br>Pragmatische KI-Beratung für den deutschen Mittelstand." data-en="Always AI. Always there for you.<br>Pragmatic AI consulting for German Mittelstand.">Immer AI. Immer für Sie da.<br>Pragmatische KI-Beratung für den deutschen Mittelstand.</span>
                 </p>
